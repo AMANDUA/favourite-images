@@ -17,6 +17,26 @@ class LoginPage extends Component {
     this.dismissError = this.dismissError.bind(this);
   }
    componentDidMount() {
+     //sample userset
+
+  const data  = [
+    {
+      userName: 'user1',
+      password: 'password1',
+    },
+    {
+      userName: 'user2',
+      password: 'password2',
+    },
+    {
+      userName: 'user3',
+      password: 'password3',
+    }
+   ]
+   const userSet = JSON.parse(localStorage.getItem('userSet'));
+   if (!userSet) {
+    localStorage.setItem('userSet', JSON.stringify(data));
+   }
       if (this.props.location.pathname.indexOf('/') !== -1) {
           this.props.history.replace('/login');
       }
@@ -49,7 +69,9 @@ class LoginPage extends Component {
 
     if (this.state.user) {
     this.props.history.push({pathname: 'home', query: {user: this.state.user}});
-    }   
+    } else {
+      return this.setState({ error: 'Invalid UserName / password !! Hint: find some users in localstorage!!' });
+    }
 }
 
   handleUserChange(evt) {
